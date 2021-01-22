@@ -1,6 +1,8 @@
 package lexer
 
-import "errors"
+import (
+	"errors"
+)
 
 // TokenType enum
 type TokenType int
@@ -227,7 +229,6 @@ func (lex *Lexer) parseString() (Token, error) {
 	// case [[ ]] - multiline string
 	if charM == '[' {
 		if !lex.matchOne("[") {
-			lex.next()
 			lex.reslice()
 			return Token{Type: LBRACE, Val: "[", atRow: lex.crrRow, atCol: lex.crrCol}, nil
 		}
@@ -452,6 +453,7 @@ func (lex *Lexer) smallerToken() (Token, error) {
 	if token.Type == INVALID {
 		return token, errors.New("continue parsing")
 	}
+
 	lex.next()
 	lex.reslice()
 	return token, nil
