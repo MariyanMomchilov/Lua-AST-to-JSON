@@ -1,0 +1,38 @@
+
+	expr 				:= funcExpr(TODO) | tableConstructor(DONE) | binExpr*(TO DO)
+
+	-- TO DO--
+	funcExpr 			:= 'function' funcbody(TODO)
+	prefExpr 			:= varOrExp nameAndArgs*
+
+
+	-- DONE + TESTED --
+	tableConstructor 	:= '{' [fieldList] '}' 
+	fieldList 			:= field (fieldSep field)* [fieldSep];
+	field 				:= '[' expr ']' '=' expr | id '=' expr | expr;
+	fieldSep 			:= ',' | ';';
+	-- DONE --
+
+
+	-- TO DO--
+	varOrExpr			:= termExpr | var;
+	var 				:= (id | '(' expr ')' varSuffix) varSuffix*
+	varSuffix			:= nameAndArgs* ('[' expr ']' | '.' id)
+	nameAndArgs			:= [':' id] args -- DONE
+	args 				:= '(' [(expr ',')* expr] ')' | tableConstructor | string -- DONE
+
+	-- DONE --
+	binExpr				:= E ('or' E)*
+	E 					:= T ('and' T)*
+	T					:= F (rel F)*
+	F					:= G (sum G)*	
+	G 					:= H (prod H)*
+	H 					:= [unary] prefExpr
+
+	
+
+	rel 				:= <   >   <=  >=  ~=  ==
+	sum					:=  +  -  ..	
+	prod 				:= ^ * /
+	unary				:= not -
+	
