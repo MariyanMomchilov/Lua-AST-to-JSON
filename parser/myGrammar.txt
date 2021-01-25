@@ -1,38 +1,54 @@
+	block 				:=  stat* [laststat] 
+	laststat 			:=  'return' [exprlist] | 'break'
+	stat 				:=  varlist '=' exprlist 							| 
+					    functioncall 								| 
+					    'do' block 'end' 								| 
+					    'while' expr 'do' block 'end' 						| 
+					    'repeat' block 'until' expr 						| 
+					    'if' expr 'then' block ('elseif' expr 'then' block)* ['else' block] 'end' 	| 
+					    'for' Id '=' expr ',' expr (',' expr)? 'do' block 'end' 			| 
+					     //'for' namelist 'in'	 exprlist 'do' block 'end' 			| 
+					    'function' funcname funcbody 						| 
+					    'local' 'function' Id funcbody 						| 
+					    'local' namelist ['=' exprlist] 
+	
+	varlist				:= var (',' var)*
+	namelist 			:= Id (',' Id)*
+	exprlist			:= expr (',' expr)*
+	
+	expr 				:= funcExpr | prefixExpr | tableConstructor | binExpr*
 
-	expr 				:= funcExpr(TODO) | tableConstructor(DONE) | binExpr*(TO DO)
+	funcExpr 			:= 'function' funcbody
+	funcbody 			:= '(' [parlist] ')' block 'end'
+	funcname 			:= Id ('.' Id)*
+	parlist				:= namelist [',' '...'] | '...'
 
-	-- TO DO--
-	funcExpr 			:= 'function' funcbody(TODO)
-	prefExpr 			:= varOrExp nameAndArgs*
+	functionCall 			:= varOrExp nameAndArgs nameAndArgs*
+	prefExpr 			:=  varOrExp nameAndArgs* 
 
-
-	-- DONE + TESTED --
-	tableConstructor 	:= '{' [fieldList] '}' 
+	tableConstructor 		:= '{' [fieldList] '}' 
 	fieldList 			:= field (fieldSep field)* [fieldSep];
-	field 				:= '[' expr ']' '=' expr | id '=' expr | expr;
+	field 				:= '[' expr ']' '=' expr | Id '=' expr | expr
 	fieldSep 			:= ',' | ';';
-	-- DONE --
 
 
-	-- TO DO--
-	varOrExpr			:= termExpr | var;
-	var 				:= (id | '(' expr ')' varSuffix) varSuffix*
-	varSuffix			:= nameAndArgs* ('[' expr ']' | '.' id)
-	nameAndArgs			:= [':' id] args -- DONE
-	args 				:= '(' [(expr ',')* expr] ')' | tableConstructor | string -- DONE
+	varOrExpr			:= termExpr | var | '(' expr ')'
+	var 				:= (Id | '(' expr ')' varSuffix) varSuffix*
+	varSuffix			:= nameAndArgs* ('[' expr ']' | '.' Id)
+	nameAndArgs			:= args
+	args 				:= '(' [exprlist] ')' | tableConstructor | string
 
-	-- DONE --
 	binExpr				:= E ('or' E)*
-	E 					:= T ('and' T)*
-	T					:= F (rel F)*
-	F					:= G (sum G)*	
-	G 					:= H (prod H)*
-	H 					:= [unary] prefExpr
+	E 				:= T ('and' T)*
+	T				:= F (rel F)*
+	F				:= G (sum G)*	
+	G 				:= H (prod H)*
+	H 				:= [unary] prefExpr
 
 	
 
 	rel 				:= <   >   <=  >=  ~=  ==
-	sum					:=  +  -  ..	
+	sum				:=  +  -  ..	
 	prod 				:= ^ * /
 	unary				:= not -
 	

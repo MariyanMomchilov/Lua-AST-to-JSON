@@ -395,7 +395,7 @@ func (lex *Lexer) smallerToken() (Token, error) {
 	case '{':
 		token = Token{Type: LCBRACE, Val: "{", atRow: lex.crrRow, atCol: lex.crrCol}
 	case '}':
-		token = Token{Type: LCBRACE, Val: "}", atRow: lex.crrRow, atCol: lex.crrCol}
+		token = Token{Type: RCBRACE, Val: "}", atRow: lex.crrRow, atCol: lex.crrCol}
 	case ';':
 		token = Token{Type: SEMICOLON, Val: ";", atRow: lex.crrRow, atCol: lex.crrCol}
 	case ':':

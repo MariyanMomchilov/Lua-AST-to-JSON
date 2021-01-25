@@ -63,7 +63,7 @@ func (c *ConstructorExpr) acceptVisitor(*Visitor) {
 }
 
 type IndexExpr struct {
-	Arr       Node
+	Base      Node
 	ExprIndex Node
 }
 
@@ -73,7 +73,7 @@ func (ie *IndexExpr) acceptVisitor(*Visitor) {
 
 type MemberExpr struct {
 	Obj   Node
-	Field Identifier
+	Field *Identifier
 }
 
 func (m *MemberExpr) acceptVisitor(*Visitor) {
@@ -95,11 +95,127 @@ func (t ArgList) acceptVisitor(*Visitor) {
 
 }
 
-type NameArgList struct {
-	Name string
-	Arg  Node
+type CallExpr struct {
+	Base      Node
+	Arguments Node
 }
 
-func (t *NameArgList) acceptVisitor(*Visitor) {
+func (t *CallExpr) acceptVisitor(*Visitor) {
+
+}
+
+type Function struct {
+	Parameters ArgList
+	Body       []Node
+}
+
+func (t *Function) acceptVisitor(*Visitor) {
+
+}
+
+type NamedFunction struct {
+	Name       Node
+	Parameters ArgList
+	Body       []Node
+}
+
+func (t *NamedFunction) acceptVisitor(*Visitor) {
+
+}
+
+type LocalFunction struct {
+	NamedFunction
+}
+
+func (t *LocalFunction) acceptVisitor(*Visitor) {
+
+}
+
+type AssignmentExpr struct {
+	Vars  []Node
+	Exprs []Node
+}
+
+func (f *AssignmentExpr) acceptVisitor(*Visitor) {
+
+}
+
+type LocalAssignmentExpr struct {
+	Vars  []Node
+	Exprs []Node
+}
+
+func (f *LocalAssignmentExpr) acceptVisitor(*Visitor) {
+
+}
+
+type DoStmnt struct {
+	Block []Node
+}
+
+func (s *DoStmnt) acceptVisitor(*Visitor) {
+
+}
+
+type WhileStmnt struct {
+	Condition Node
+	Block     []Node
+}
+
+func (s *WhileStmnt) acceptVisitor(*Visitor) {
+
+}
+
+type RepeatStmnt struct {
+	Condition Node
+	Block     []Node
+}
+
+func (s *RepeatStmnt) acceptVisitor(*Visitor) {
+
+}
+
+type IfStmnt struct {
+	Clauses Node
+}
+
+func (s *IfStmnt) acceptVisitor(*Visitor) {
+
+}
+
+type IfClause struct {
+	Condition Node
+	Block     []Node
+}
+
+func (s *IfClause) acceptVisitor(*Visitor) {
+
+}
+
+type ElseIfClause struct {
+	Condition Node
+	Block     []Node
+}
+
+func (s *ElseIfClause) acceptVisitor(*Visitor) {
+
+}
+
+type ElseClause struct {
+	Block []Node
+}
+
+func (s *ElseClause) acceptVisitor(*Visitor) {
+
+}
+
+type ForStmnt struct {
+	Start     Node
+	Condition Node
+	Step      Node
+	Block     []Node
+}
+
+func (s *ForStmnt) acceptVisitor(*Visitor) {
 
 }

@@ -20,7 +20,7 @@ func TestLex(t *testing.T) {
 }
 
 func TestLex2(t *testing.T) {
-	file, _ := os.Open("text")
+	file, _ := os.Open("lexTest.txt")
 	src, _ := ioutil.ReadAll(file)
 	var lex lexer.Lexer
 	lex = lex.New(string(src))
@@ -29,7 +29,51 @@ func TestLex2(t *testing.T) {
 }
 
 func TestParser1(t *testing.T) {
-	file, _ := os.Open("p1")
+	file, _ := os.Open("testFile1.txt")
+	src, _ := ioutil.ReadAll(file)
+	var lex lexer.Lexer
+	lex = lex.New(string(src))
+	tokens, _ := lex.Run()
+	fmt.Println(tokens)
+	parser := parser.NewParser(tokens)
+	nodes := parser.Run()
+	fmt.Println(nodes)
+}
+
+func TestParser2(t *testing.T) {
+	var lex lexer.Lexer
+	lex = lex.New(`arr3("abc", d, 1 + 3)(opp)`)
+	tokens, _ := lex.Run()
+	//fmt.Println(tokens)
+	parser := parser.NewParser(tokens)
+	node := parser.FunctionCall()
+	fmt.Println(node)
+}
+
+func TestParser5(t *testing.T) {
+	var lex lexer.Lexer
+	lex = lex.New("arr[i] == i + 1")
+	tokens, _ := lex.Run()
+	//fmt.Println(tokens)
+	parser := parser.NewParser(tokens)
+	node := parser.ParseExpression()
+	fmt.Println(node)
+}
+
+func TestParser3(t *testing.T) {
+	file, _ := os.Open("testFile2.txt")
+	src, _ := ioutil.ReadAll(file)
+	var lex lexer.Lexer
+	lex = lex.New(string(src))
+	tokens, _ := lex.Run()
+	fmt.Println(tokens)
+	parser := parser.NewParser(tokens)
+	nodes := parser.Run()
+	fmt.Println(nodes)
+}
+
+func TestParser4(t *testing.T) {
+	file, _ := os.Open("testFile3.txt")
 	src, _ := ioutil.ReadAll(file)
 	var lex lexer.Lexer
 	lex = lex.New(string(src))

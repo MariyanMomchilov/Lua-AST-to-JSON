@@ -1,0 +1,6 @@
+function ()
+    a, b, c = 1, 2, 3+5 - 1
+    arr = {1, 2, 3}
+    indexTest = arr[2]
+    fieldMember = obj.field
+end
