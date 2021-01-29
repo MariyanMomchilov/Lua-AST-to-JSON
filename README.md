@@ -5,4 +5,3 @@ The purpose of this project is to build Abstract Syntax Tree(AST) from Lua code 
 2. Creating the AST from the tokens
 3. Traverse the tree and serialize each node 
 
-Currently still working on the parser
