@@ -8,7 +8,7 @@
 					    'if' expr 'then' block ('elseif' expr 'then' block)* ['else' block] 'end' 	| 
 					    'for' Id '=' expr ',' expr (',' expr)? 'do' block 'end' 			| 
 					     //'for' namelist 'in'	 exprlist 'do' block 'end' 			| 
-					    'function' funcname funcbody 						| 
+					    'function' f	uncname funcbody 					| 
 					    'local' 'function' Id funcbody 						| 
 					    'local' namelist ['=' exprlist] 
 	

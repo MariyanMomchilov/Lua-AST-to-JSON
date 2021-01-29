@@ -1,0 +1,32 @@
+function insert (index, value)
+    if not statetab[index] then
+    statetab[index] = {value}
+    else
+    table.insert(statetab[index], value)
+    end
+
+    arr = {1, 2, 3}
+    for i = 0, 2, 1 do
+        if arr[i] == i + 1 then
+        print(arr[i])
+        end
+    end 
+end
+
+function allwords ()
+    local line = io.read()    
+    local pos = 1             
+    return function ()        
+    while line do           
+        local s, e = string.find(line, "%w+", pos)
+        if s then      
+        pos = e + 1  
+        return string.sub(line, s, e)   
+        else
+        line = io.read()   
+        pos = 1            
+        end
+    end
+    return nil            
+    end
+end

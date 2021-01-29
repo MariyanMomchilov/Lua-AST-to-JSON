@@ -1,7 +1,7 @@
 Dog = {}                              1.53
 
 function Dog:new()                    2
-  newObj = {sound = 'woof'}           3.
+  newObj = {sound = 'woof'}          -- a comment
   self.__index = self                 4.
   return setmetatable(newObj, self)   5.00000
 end

@@ -7,14 +7,14 @@ import (
 	"../lexer"
 )
 
-// Parser builds the AST
+// Parser is the AST parser
 type Parser struct {
 	tokens        []lexer.Token
-	topStatements []Node
+	topstatements Program
 	i             int
 }
 
-// NewParser constructor
+// NewParser constructs a Parser
 func NewParser(tokens []lexer.Token) Parser {
 	return Parser{tokens, nil, 0}
 }
@@ -83,13 +83,13 @@ func (p *Parser) exprList() []Node {
 	}
 
 	list := make([]Node, 0, 5)
-	expr := p.ParseExpression()
+	expr := p.parseExpression()
 	if expr != nil {
 		list = append(list, expr)
 		crr, _ = p.current()
 		for crr.Type == lexer.COMMA {
 			p.next()
-			expr = p.ParseExpression()
+			expr = p.parseExpression()
 			list = append(list, expr)
 			crr, _ = p.current()
 		}
@@ -107,7 +107,7 @@ func (p *Parser) parseField() Node {
 
 	if crr.Type == lexer.LBRACE {
 		p.next()
-		key = p.ParseExpression()
+		key = p.parseExpression()
 		p.next() // ']'
 
 		crr, _ = p.current()
@@ -121,13 +121,13 @@ func (p *Parser) parseField() Node {
 		key = &Identifier{crr.Val}
 		crr, _ = p.current()
 		if crr.Type != lexer.ASSIGN {
-			p.i -= 1
-			return &KeyExpr{nil, p.ParseExpression()}
+			p.i--
+			return &KeyExpr{nil, p.parseExpression()}
 		}
 		p.next()
 	}
 
-	expr := p.ParseExpression()
+	expr := p.parseExpression()
 	return &KeyExpr{key, expr}
 }
 
@@ -200,7 +200,7 @@ func (p *Parser) parseNameAndArgs() Node {
 	return &SimpleExpr{crr.Type, crr.Val}
 }
 
-func (p *Parser) AssignmentStatement() Node {
+func (p *Parser) assignmentStatement() Node {
 	crrI := p.i
 	vars := p.varList()
 
@@ -215,48 +215,77 @@ func (p *Parser) AssignmentStatement() Node {
 
 	return &AssignmentExpr{vars, exprs}
 }
-func (p *Parser) Statement() Node {
+func (p *Parser) statement() Node {
 
 	crr, err := p.current()
 	if err != nil {
 		return nil
 	}
 
-	assignment := p.AssignmentStatement()
+	assignment := p.assignmentStatement()
 	if assignment != nil {
 		return assignment
 	}
 
-	funcCall := p.FunctionCall()
+	funcCall := p.functionCall()
 	if funcCall != nil {
 		return funcCall
 	}
 
 	switch crr.Type {
 	case lexer.DO:
-		return p.DoStatement()
+		return p.doStatement()
 	case lexer.WHILE:
-		return p.WhileStatement()
+		return p.whileStatement()
 	case lexer.REPEAT:
-		return p.RepeatStatement()
+		return p.repeatStatement()
 	case lexer.IF:
-		return p.IfStatement()
+		return p.ifStatement()
 	case lexer.FOR:
-		return p.ForStatement()
+		return p.forStatement()
 	case lexer.FUNCTION:
-		return p.FunctionStatement()
-		//case lexer.LOCAL:
-		//	return p.LocalStatement()
+		return p.functionStatement()
+	case lexer.LOCAL:
+		return p.localStatement()
+	case lexer.RETURN:
+		return p.returnStatement()
+	case lexer.BREAK:
+		p.next()
+		return &SimpleExpr{lexer.BREAK, "break"}
 	}
 
 	return nil
 }
 
-func (p *Parser) LocalStatement() Node {
+func (p *Parser) returnStatement() Node {
+	p.next()
+	return ReturnList(p.exprList())
+}
+
+func (p *Parser) localStatement() Node {
+	p.next()
+
+	crr, err := p.current()
+	if err != nil {
+		return nil
+	}
+
+	if crr.Type == lexer.FUNCTION {
+		namedFunction, assert := p.functionStatement().(*NamedFunction)
+		if assert && namedFunction != nil {
+			return &LocalFunction{namedFunction}
+		}
+	}
+
+	assignment, assert := p.assignmentStatement().(*AssignmentExpr)
+	if assert && assignment != nil {
+		return &LocalAssignmentExpr{assignment}
+	}
+
 	return nil
 }
 
-func (p *Parser) FunctionStatement() Node {
+func (p *Parser) functionStatement() Node {
 	p.next()
 
 	// function name
@@ -299,7 +328,7 @@ func (p *Parser) FunctionStatement() Node {
 	}
 
 	//parse body
-	block := p.Block()
+	block := p.block()
 	crr, _ = p.current()
 	if crr.Type != lexer.END {
 		return nil
@@ -310,11 +339,11 @@ func (p *Parser) FunctionStatement() Node {
 }
 
 // only regular for
-func (p *Parser) ForStatement() Node {
+func (p *Parser) forStatement() Node {
 	p.next() // 'for'
-	init := p.AssignmentStatement()
+	init := p.assignmentStatement()
 	p.next() // 'do'
-	block := p.Block()
+	block := p.block()
 	p.next() // 'end'
 
 	expr, ok := init.(*AssignmentExpr)
@@ -324,12 +353,12 @@ func (p *Parser) ForStatement() Node {
 	return &ForStmnt{expr.Exprs[0], expr.Exprs[1], nil, block}
 
 }
-func (p *Parser) IfStatement() Node {
+func (p *Parser) ifStatement() Node {
 	clauses := make([]Node, 0, 3)
 	p.next() // 'if'
-	expr := p.ParseExpression()
+	expr := p.parseExpression()
 	p.next() // 'then'
-	block := p.Block()
+	block := p.block()
 	clauses = append(clauses, &IfClause{expr, block})
 
 	crr, err := p.current()
@@ -338,16 +367,16 @@ func (p *Parser) IfStatement() Node {
 	}
 	for crr.Type == lexer.ELSEIF {
 		p.next() // 'elseif'
-		expr := p.ParseExpression()
+		expr := p.parseExpression()
 		p.next() // 'then'
-		block := p.Block()
+		block := p.block()
 		clauses = append(clauses, &ElseIfClause{expr, block})
 		crr, err = p.current()
 	}
 
 	if crr.Type == lexer.ELSE {
 		p.next() // 'else'
-		block := p.Block()
+		block := p.block()
 		p.next() // 'end'
 		clauses = append(clauses, &ElseClause{block})
 	}
@@ -360,42 +389,42 @@ func (p *Parser) IfStatement() Node {
 	return &IfStmnt{ArgList(clauses)}
 }
 
-func (p *Parser) RepeatStatement() Node {
+func (p *Parser) repeatStatement() Node {
 	p.next()
-	block := p.Block()
+	block := p.block()
 	p.next() // 'until'
-	cond := p.ParseExpression()
+	cond := p.parseExpression()
 	return &RepeatStmnt{cond, block}
 }
 
-func (p *Parser) WhileStatement() Node {
+func (p *Parser) whileStatement() Node {
 	p.next()
-	cond := p.ParseExpression()
+	cond := p.parseExpression()
 	p.next() // 'do'
-	block := p.Block()
+	block := p.block()
 	p.next() // 'end'
 	return &WhileStmnt{cond, block}
 }
 
-func (p *Parser) DoStatement() Node {
+func (p *Parser) doStatement() Node {
 	p.next()
-	block := p.Block()
+	block := p.block()
 	p.next() // 'end'
 	return &DoStmnt{block}
 }
 
-func (p *Parser) Block() []Node {
+func (p *Parser) block() []Node {
 	statements := make([]Node, 0, 10)
-	statement := p.Statement()
+	statement := p.statement()
 	for statement != nil {
 		statements = append(statements, statement)
-		statement = p.Statement()
+		statement = p.statement()
 	}
 
 	return statements
 }
 
-func (p *Parser) FunctionExpr() Node {
+func (p *Parser) functionExpr() Node {
 	crr, err := p.current()
 	if err != nil {
 		return nil
@@ -434,7 +463,7 @@ func (p *Parser) FunctionExpr() Node {
 	}
 
 	//parse body
-	block := p.Block()
+	block := p.block()
 	crr, _ = p.current()
 	if crr.Type != lexer.END {
 		return nil
@@ -445,7 +474,7 @@ func (p *Parser) FunctionExpr() Node {
 }
 
 // and prefix expr at the same time
-func (p *Parser) FunctionCall() Node {
+func (p *Parser) functionCall() Node {
 	_, err := p.current()
 	if err != nil {
 		return nil
@@ -463,7 +492,7 @@ func (p *Parser) FunctionCall() Node {
 	return callee
 }
 
-func (p *Parser) VarSuffix(pref Node) Node {
+func (p *Parser) varSuffix(pref Node) Node {
 	crr, err := p.current()
 	if err != nil {
 		return nil
@@ -483,7 +512,7 @@ func (p *Parser) VarSuffix(pref Node) Node {
 	crr, err = p.current()
 	if err == nil && crr.Type == lexer.LBRACE {
 		p.next()
-		expr := p.ParseExpression()
+		expr := p.parseExpression()
 		p.next() // ']'
 		if callExpr == nil {
 			return &IndexExpr{pref, expr}
@@ -517,18 +546,18 @@ func (p *Parser) parseVar() Node {
 		p.next()
 		varExpr = &Identifier{crr.Val}
 		crrI := p.i
-		suff := p.VarSuffix(varExpr)
+		suff := p.varSuffix(varExpr)
 		if suff == nil {
 			p.i = crrI
 			return varExpr
 		}
 		varExpr = suff
 		crrI = p.i
-		suff = p.VarSuffix(varExpr)
+		suff = p.varSuffix(varExpr)
 		if suff != nil {
 			for suff != nil {
 				varExpr = &CallExpr{varExpr, suff}
-				suff = p.VarSuffix(varExpr)
+				suff = p.varSuffix(varExpr)
 			}
 			return varExpr
 		}
@@ -537,10 +566,10 @@ func (p *Parser) parseVar() Node {
 
 	} else if crr.Type == lexer.LPAR {
 		p.next()
-		varExpr = p.ParseExpression()
+		varExpr = p.parseExpression()
 		p.next() // ')'
 		crrI := p.i
-		suff := p.VarSuffix(varExpr)
+		suff := p.varSuffix(varExpr)
 
 		if suff == nil {
 			p.i = crrI
@@ -549,11 +578,11 @@ func (p *Parser) parseVar() Node {
 
 		varExpr = suff
 		crrI = p.i
-		suff = p.VarSuffix(varExpr)
+		suff = p.varSuffix(varExpr)
 		if suff != nil {
 			for suff != nil {
 				varExpr = &CallExpr{varExpr, suff}
-				suff = p.VarSuffix(varExpr)
+				suff = p.varSuffix(varExpr)
 			}
 			return varExpr
 		}
@@ -669,16 +698,21 @@ func (p *Parser) parseBinExpr() Node {
 	return left
 }
 
-func (p *Parser) ParseExpression() Node {
+func (p *Parser) parseExpression() Node {
 
-	expr := p.FunctionExpr()
+	expr := p.functionExpr()
 	if expr != nil {
 		return expr
 	}
 
+	crrI := p.i
 	expr = p.parseBinExpr()
 	if expr != nil {
-		return expr
+		crr, _ := p.current()
+		if crr.Type != lexer.LPAR {
+			return expr
+		}
+		p.i = crrI
 	}
 
 	expr = p.parseTableConstructor()
@@ -686,20 +720,21 @@ func (p *Parser) ParseExpression() Node {
 		return expr
 	}
 
-	return p.FunctionCall()
+	return p.functionCall()
 }
 
-func (p *Parser) Run() []Node {
-	statement := p.Statement()
+// Run builds the AST
+func (p *Parser) Run() Program {
+	statement := p.statement()
 	statements := make([]Node, 0, 10)
 	for statement != nil {
 		statements = append(statements, statement)
 		if p.i >= len(p.tokens) {
 			break
 		}
-		statement = p.Statement()
+		statement = p.statement()
 	}
 
-	p.topStatements = statements
+	p.topstatements = statements
 	return statements
 }

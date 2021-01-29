@@ -63,7 +63,6 @@ const (
 	EQ       // ==
 	AND
 	OR
-	// ~= ??
 
 	//unary op's
 	UMINUS
@@ -499,14 +498,16 @@ func (lex *Lexer) nextToken() (Token, error) {
 	return Token{Type: INVALID, Val: "", atRow: lex.crrRow, atCol: lex.crrCol}, nil
 }
 
-// Run parses the source
+// Run produces a list of tokens from the source
 func (lex *Lexer) Run() ([]Token, error) {
 	for len(lex.src) > 0 {
 		token, err := lex.nextToken()
 		if err != nil {
 			return lex.tokens, err
 		}
-		lex.tokens = append(lex.tokens, token)
+		if token.Type != COMMENT {
+			lex.tokens = append(lex.tokens, token)
+		}
 	}
 	return lex.tokens, nil
 }
