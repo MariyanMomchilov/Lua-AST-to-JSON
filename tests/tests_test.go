@@ -29,18 +29,6 @@ func TestLex2(t *testing.T) {
 	fmt.Println(tokens)
 }
 
-func TestParser1(t *testing.T) {
-	file, _ := os.Open("testFile1.txt")
-	src, _ := ioutil.ReadAll(file)
-	var lex lexer.Lexer
-	lex = lex.New(string(src))
-	tokens, _ := lex.Run()
-	fmt.Println(tokens)
-	parser := parser.NewParser(tokens)
-	nodes := parser.Run()
-	fmt.Println(nodes)
-}
-
 func TestParser(t *testing.T) {
 	file, _ := os.Open("parserTest.txt")
 	src, _ := ioutil.ReadAll(file)
