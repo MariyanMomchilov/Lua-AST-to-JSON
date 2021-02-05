@@ -1,0 +1,49 @@
+{
+    "ExpressionType": "TopStatements",
+    "Values": [
+        {
+            "ExpressionType": "VariableDefinitionExpression",
+            "Name": "a",
+            "Value": {
+                "ExpressionType": "LiteralString",
+                "Value": "astring"
+            }
+        },
+        {
+            "ExpressionType": "ForStatement",
+            "Initialization": {
+                "ExpressionType": "LiteralString",
+                "Value": "0"
+            },
+            "Condition": {
+                "ExpressionType": "LiteralString",
+                "Value": "10"
+            },
+            "Iteration": {
+                "ExpressionType": "LiteralString",
+                "Value": "1"
+            },
+            "Body": {
+                "ExpressionType": "TopStatements",
+                "Values": [
+                    {
+                        "ExpressionType": "CallExpression",
+                        "Identifier": {
+                            "ExpressionType": "IdentifierExpression",
+                            "Name": "print"
+                        },
+                        "Arguments": {
+                            "ExpressionType": "ListExpression",
+                            "Values": [
+                                {
+                                    "ExpressionType": "IdentifierExpression",
+                                    "Name": "a"
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}
