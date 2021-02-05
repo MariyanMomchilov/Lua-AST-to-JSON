@@ -9,26 +9,25 @@ import (
 )
 
 var tokenOp map[lexer.TokenType]string = map[lexer.TokenType]string{
-	lexer.STRING:   "string",
-	lexer.NUMBER:   "number",
+	lexer.STRING:   "String",
+	lexer.NUMBER:   "Number",
 	lexer.NIL:      "null",
-	lexer.ASSIGN:   "=",
-	lexer.PLUS:     "+",
-	lexer.MINUS:    "-",
-	lexer.MULT:     "*",
-	lexer.DIV:      "/",
-	lexer.POW:      "^",
-	lexer.MOD:      "%",
-	lexer.CONCAT:   "+",
-	lexer.LESSER:   "<",
-	lexer.LESSERQ:  "<=",
-	lexer.GREATER:  ">",
-	lexer.GREATERQ: ">=",
-	lexer.EQ:       "==",
-	lexer.AND:      "&&",
-	lexer.OR:       "||",
-	lexer.UMINUS:   "-",
-	lexer.NOT:      "!"}
+	lexer.ASSIGN:   "Equal",
+	lexer.PLUS:     "Plus",
+	lexer.MINUS:    "Minus",
+	lexer.MULT:     "Star",
+	lexer.DIV:      "Division",
+	lexer.MOD:      "Modulo",
+	lexer.CONCAT:   "Plus",
+	lexer.LESSER:   "Less",
+	lexer.LESSERQ:  "LessEqual",
+	lexer.GREATER:  "Greater",
+	lexer.GREATERQ: "GreaterEqual",
+	lexer.EQ:       "EqualEqual",
+	lexer.AND:      "LogicalAnd",
+	lexer.OR:       "LogicalOr",
+	lexer.UMINUS:   "Minus",
+	lexer.NOT:      "LogicalNot"}
 
 type VisitorJSON struct {
 	writer io.Writer

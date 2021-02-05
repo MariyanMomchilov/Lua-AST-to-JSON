@@ -27,6 +27,22 @@
                 "ExpressionType": "TopStatements",
                 "Values": [
                     {
+                        "ExpressionType": "VariableDefinitionExpression",
+                        "Name": "a",
+                        "Value": {
+                            "ExpressionType": "BinaryExpression",
+                            "Left": {
+                                "ExpressionType": "IdentifierExpression",
+                                "Name": "a"
+                            },
+                            "Right": {
+                                "ExpressionType": "LiteralString",
+                                "Value": "a"
+                            },
+                            "Operator": "Plus"
+                        }
+                    },
+                    {
                         "ExpressionType": "CallExpression",
                         "Identifier": {
                             "ExpressionType": "IdentifierExpression",
