@@ -1,0 +1,126 @@
+{
+    "ExpressionType": "TopStatements",
+    "Values": [
+        {
+            "ExpressionType": "FunctionDeclaration",
+            "Name": "test",
+            "ArgumentsIdentifiers": [
+                "a",
+                "b"
+            ],
+            "Body": {
+                "ExpressionType": "TopStatements",
+                "Values": [
+                    {
+                        "ExpressionType": "ForStatement",
+                        "Initialization": {
+                            "ExpressionType": "LiteralNumber",
+                            "Value": 0
+                        },
+                        "Condition": {
+                            "ExpressionType": "CallExpression",
+                            "Identifier": {
+                                "ExpressionType": "IdentifierExpression",
+                                "Name": "len"
+                            },
+                            "Arguments": {
+                                "ExpressionType": "ListExpression",
+                                "Values": [
+                                    {
+                                        "ExpressionType": "IdentifierExpression",
+                                        "Name": "arr"
+                                    }
+                                ]
+                            }
+                        },
+                        "Iteration": {
+                            "ExpressionType": "LiteralNumber",
+                            "Value": 1
+                        },
+                        "Body": {
+                            "ExpressionType": "TopStatements",
+                            "Values": [
+                                {
+                                    "ExpressionType": "VariableDefinitionExpression",
+                                    "Name": "el",
+                                    "Value": {
+                                        "ExpressionType": "CallExpression",
+                                        "Identifier": {
+                                            "ExpressionType": "IdentifierExpression",
+                                            "Name": "get"
+                                        },
+                                        "Arguments": {
+                                            "ExpressionType": "ListExpression",
+                                            "Values": [
+                                                {
+                                                    "ExpressionType": "IdentifierExpression",
+                                                    "Name": "i"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                },
+                                {
+                                    "ExpressionType": "IfStatement",
+                                    "Condition": {
+                                        "ExpressionType": "BinaryExpression",
+                                        "Left": {
+                                            "ExpressionType": "IdentifierExpression",
+                                            "Name": "el"
+                                        },
+                                        "Right": {
+                                            "ExpressionType": "LiteralNumber",
+                                            "Value": 2
+                                        },
+                                        "Operator": "Modulo"
+                                    },
+                                    "IfStatement": {
+                                        "ExpressionType": "TopStatements",
+                                        "Values": [
+                                            {
+                                                "ExpressionType": "CallExpression",
+                                                "Identifier": {
+                                                    "ExpressionType": "IdentifierExpression",
+                                                    "Name": "print"
+                                                },
+                                                "Arguments": {
+                                                    "ExpressionType": "ListExpression",
+                                                    "Values": [
+                                                        {
+                                                            "ExpressionType": "IdentifierExpression",
+                                                            "Name": "el"
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "ExpressionType": "CallExpression",
+            "Identifier": {
+                "ExpressionType": "IdentifierExpression",
+                "Name": "test"
+            },
+            "Arguments": {
+                "ExpressionType": "ListExpression",
+                "Values": [
+                    {
+                        "ExpressionType": "IdentifierExpression",
+                        "Name": "a"
+                    },
+                    {
+                        "ExpressionType": "IdentifierExpression",
+                        "Name": "b"
+                    }
+                ]
+            }
+        }
+    ]
+}

@@ -1,0 +1,10 @@
+function test(a, b)
+    for i = 0, len(arr), 1 do
+        el = get(i)
+        if el % 2 then
+        print(el)
+        end
+    end
+end
+
+test(a, b)

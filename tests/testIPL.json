@@ -5,58 +5,159 @@
             "ExpressionType": "VariableDefinitionExpression",
             "Name": "a",
             "Value": {
-                "ExpressionType": "LiteralString",
-                "Value": "astring"
+                "ExpressionType": "LiteralNumber",
+                "Value": 10
             }
         },
         {
-            "ExpressionType": "ForStatement",
-            "Initialization": {
-                "ExpressionType": "LiteralString",
-                "Value": "0"
-            },
-            "Condition": {
-                "ExpressionType": "LiteralString",
-                "Value": "10"
-            },
-            "Iteration": {
-                "ExpressionType": "LiteralString",
-                "Value": "1"
-            },
+            "ExpressionType": "VariableDefinitionExpression",
+            "Name": "b",
+            "Value": {
+                "ExpressionType": "BinaryExpression",
+                "Left": {
+                    "ExpressionType": "LiteralNumber",
+                    "Value": 2
+                },
+                "Right": {
+                    "ExpressionType": "IdentifierExpression",
+                    "Name": "a"
+                },
+                "Operator": "Star"
+            }
+        },
+        {
+            "ExpressionType": "FunctionDeclaration",
+            "Name": "test",
+            "ArgumentsIdentifiers": [
+                "a",
+                "b"
+            ],
             "Body": {
                 "ExpressionType": "TopStatements",
                 "Values": [
                     {
-                        "ExpressionType": "VariableDefinitionExpression",
-                        "Name": "a",
-                        "Value": {
-                            "ExpressionType": "BinaryExpression",
-                            "Left": {
-                                "ExpressionType": "IdentifierExpression",
-                                "Name": "a"
-                            },
-                            "Right": {
-                                "ExpressionType": "LiteralString",
-                                "Value": "a"
-                            },
-                            "Operator": "Plus"
-                        }
-                    },
-                    {
-                        "ExpressionType": "CallExpression",
-                        "Identifier": {
-                            "ExpressionType": "IdentifierExpression",
-                            "Name": "print"
+                        "ExpressionType": "ForStatement",
+                        "Initialization": {
+                            "ExpressionType": "LiteralNumber",
+                            "Value": 0
                         },
-                        "Arguments": {
-                            "ExpressionType": "ListExpression",
+                        "Condition": {
+                            "ExpressionType": "LiteralNumber",
+                            "Value": 10
+                        },
+                        "Iteration": {
+                            "ExpressionType": "LiteralNumber",
+                            "Value": 1
+                        },
+                        "Body": {
+                            "ExpressionType": "TopStatements",
                             "Values": [
                                 {
-                                    "ExpressionType": "IdentifierExpression",
-                                    "Name": "a"
+                                    "ExpressionType": "VariableDefinitionExpression",
+                                    "Name": "a",
+                                    "Value": {
+                                        "ExpressionType": "BinaryExpression",
+                                        "Left": {
+                                            "ExpressionType": "IdentifierExpression",
+                                            "Name": "a"
+                                        },
+                                        "Right": {
+                                            "ExpressionType": "LiteralNumber",
+                                            "Value": 3
+                                        },
+                                        "Operator": "Plus"
+                                    }
+                                },
+                                {
+                                    "ExpressionType": "VariableDefinitionExpression",
+                                    "Name": "b",
+                                    "Value": {
+                                        "ExpressionType": "BinaryExpression",
+                                        "Left": {
+                                            "ExpressionType": "BinaryExpression",
+                                            "Left": {
+                                                "ExpressionType": "BinaryExpression",
+                                                "Left": {
+                                                    "ExpressionType": "IdentifierExpression",
+                                                    "Name": "b"
+                                                },
+                                                "Right": {
+                                                    "ExpressionType": "IdentifierExpression",
+                                                    "Name": "b"
+                                                },
+                                                "Operator": "Star"
+                                            },
+                                            "Right": {
+                                                "ExpressionType": "LiteralNumber",
+                                                "Value": 2
+                                            },
+                                            "Operator": "Division"
+                                        },
+                                        "Right": {
+                                            "ExpressionType": "BinaryExpression",
+                                            "Left": {
+                                                "ExpressionType": "BinaryExpression",
+                                                "Left": {
+                                                    "ExpressionType": "IdentifierExpression",
+                                                    "Name": "i"
+                                                },
+                                                "Right": {
+                                                    "ExpressionType": "LiteralNumber",
+                                                    "Value": 10
+                                                },
+                                                "Operator": "Star"
+                                            },
+                                            "Right": {
+                                                "ExpressionType": "LiteralNumber",
+                                                "Value": 5
+                                            },
+                                            "Operator": "Division"
+                                        },
+                                        "Operator": "Plus"
+                                    }
+                                },
+                                {
+                                    "ExpressionType": "CallExpression",
+                                    "Identifier": {
+                                        "ExpressionType": "IdentifierExpression",
+                                        "Name": "print"
+                                    },
+                                    "Arguments": {
+                                        "ExpressionType": "ListExpression",
+                                        "Values": [
+                                            {
+                                                "ExpressionType": "IdentifierExpression",
+                                                "Name": "a"
+                                            },
+                                            {
+                                                "ExpressionType": "IdentifierExpression",
+                                                "Name": "b"
+                                            }
+                                        ]
+                                    }
                                 }
                             ]
                         }
+                    }
+                ]
+            }
+        },
+        {
+            "ExpressionType": "CallExpression",
+            "Identifier": {
+                "ExpressionType": "IdentifierExpression",
+                "Name": "test"
+            },
+            "Arguments": {
+                "ExpressionType": "ListExpression",
+                "Values": [
+                    {
+                        "ExpressionType": "IdentifierExpression",
+                        "Name": "a"
+                    },
+                    {
+                        "ExpressionType": "IdentifierExpression",
+                        "Name": "b"
                     }
                 ]
             }

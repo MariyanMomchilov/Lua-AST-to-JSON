@@ -1,517 +1,517 @@
 {
-	"ExpressionType": "Program",
-	"Statements": [
-		{
-			"ExpressionType": "Function",
-			"Name": {
-				"ExpressionType": "Identifier",
-				"Name": "insert"
-			},
-			"Parameters": {
-				"ExpressionType": "ArgumentList",
-				"Arguments": [
-					{
-						"ExpressionType": "Identifier",
-						"Name": "index"
-					},
-					{
-						"ExpressionType": "Identifier",
-						"Name": "value"
-					}
-				]
-			},
-			"Body": [
-				{
-					"ExpressionType": "IfStatement",
-					"Clauses": {
-						"ExpressionType": "ArgumentList",
-						"Arguments": [
-							{
-								"ExpressionType": "IfClauseStatement",
-								"Condition": {
-									"ExpressionType": "UnaryExpression",
-									"Operator": "not",
-									"Operand": {
-										"ExpressionType": "IndexExpression",
-										"BaseExpression": {
-											"ExpressionType": "Identifier",
-											"Name": "statetab"
-										},
-										"Index": {
-											"ExpressionType": "Identifier",
-											"Name": "index"
-										}
-									}
-								},
-								"Body": [
-									{
-										"ExpressionType": "AssignmentExpression",
-										"Variables": [
-											{
-												"ExpressionType": "IndexExpression",
-												"BaseExpression": {
-													"ExpressionType": "Identifier",
-													"Name": "statetab"
-												},
-												"Index": {
-													"ExpressionType": "Identifier",
-													"Name": "index"
-												}
-											}
-										],
-										"Expressions": [
-											{
-												"ExpressionType": "ConstructorExpression",
-												"FieldList": [
-													{
-														"ExpressionType": "KeyExpression",
-														"Key": null,
-														"Value": {
-															"ExpressionType": "Identifier",
-															"Name": "value"
-														}
-													}
-												]
-											}
-										]
-									}
-								]
-							},
-							{
-								"ExpressionType": "ElseClauseStatement",
-								"Body": [
-									{
-										"ExpressionType": "CallExpression",
-										"Base": {
-											"ExpressionType": "MemberExpression",
-											"Object": {
-												"ExpressionType": "Identifier",
-												"Name": "table"
-											},
-											"Field": {
-												"ExpressionType": "Identifier",
-												"Name": "insert"
-											}
-										},
-										"Argument": {
-											"ExpressionType": "ArgumentList",
-											"Arguments": [
-												{
-													"ExpressionType": "IndexExpression",
-													"BaseExpression": {
-														"ExpressionType": "Identifier",
-														"Name": "statetab"
-													},
-													"Index": {
-														"ExpressionType": "Identifier",
-														"Name": "index"
-													}
-												},
-												{
-													"ExpressionType": "Identifier",
-													"Name": "value"
-												}
-											]
-										}
-									}
-								]
-							}
-						]
-					}
-				},
-				{
-					"ExpressionType": "AssignmentExpression",
-					"Variables": [
-						{
-							"ExpressionType": "Identifier",
-							"Name": "arr"
-						}
-					],
-					"Expressions": [
-						{
-							"ExpressionType": "ConstructorExpression",
-							"FieldList": [
-								{
-									"ExpressionType": "KeyExpression",
-									"Key": null,
-									"Value": {
-										"ExpressionType": "SimpleExpression",
-										"ValueType": "number",
-										"Value": "1"
-									}
-								},
-								{
-									"ExpressionType": "KeyExpression",
-									"Key": null,
-									"Value": {
-										"ExpressionType": "SimpleExpression",
-										"ValueType": "number",
-										"Value": "2"
-									}
-								},
-								{
-									"ExpressionType": "KeyExpression",
-									"Key": null,
-									"Value": {
-										"ExpressionType": "SimpleExpression",
-										"ValueType": "number",
-										"Value": "3"
-									}
-								}
-							]
-						}
-					]
-				},
-				{
-					"ExpressionType": "ForStatement",
-					"Initialization": {
-						"ExpressionType": "SimpleExpression",
-						"ValueType": "number",
-						"Value": "0"
-					},
-					"Condition": {
-						"ExpressionType": "SimpleExpression",
-						"ValueType": "number",
-						"Value": "2"
-					},
-					"Iteration": {
-						"ExpressionType": "SimpleExpression",
-						"ValueType": "number",
-						"Value": "1"
-					},
-					"Body": [
-						{
-							"ExpressionType": "IfStatement",
-							"Clauses": {
-								"ExpressionType": "ArgumentList",
-								"Arguments": [
-									{
-										"ExpressionType": "IfClauseStatement",
-										"Condition": {
-											"ExpressionType": "BinaryExpression",
-											"Operator": "==",
-											"LeftOperand": {
-												"ExpressionType": "IndexExpression",
-												"BaseExpression": {
-													"ExpressionType": "Identifier",
-													"Name": "arr"
-												},
-												"Index": {
-													"ExpressionType": "Identifier",
-													"Name": "i"
-												}
-											},
-											"RightOperand": {
-												"ExpressionType": "BinaryExpression",
-												"Operator": "+",
-												"LeftOperand": {
-													"ExpressionType": "Identifier",
-													"Name": "i"
-												},
-												"RightOperand": {
-													"ExpressionType": "SimpleExpression",
-													"ValueType": "number",
-													"Value": "1"
-												}
-											}
-										},
-										"Body": [
-											{
-												"ExpressionType": "CallExpression",
-												"Base": {
-													"ExpressionType": "Identifier",
-													"Name": "print"
-												},
-												"Argument": {
-													"ExpressionType": "ArgumentList",
-													"Arguments": [
-														{
-															"ExpressionType": "IndexExpression",
-															"BaseExpression": {
-																"ExpressionType": "Identifier",
-																"Name": "arr"
-															},
-															"Index": {
-																"ExpressionType": "Identifier",
-																"Name": "i"
-															}
-														}
-													]
-												}
-											}
-										]
-									}
-								]
-							}
-						}
-					]
-				}
-			]
-		},
-		{
-			"ExpressionType": "Function",
-			"Name": {
-				"ExpressionType": "Identifier",
-				"Name": "allwords"
-			},
-			"Parameters": {
-				"ExpressionType": "ArgumentList",
-				"Arguments": []
-			},
-			"Body": [
-				{
-					"ExpressionType": "LocalAssignmentExpression",
-					"Variables": [
-						{
-							"ExpressionType": "Identifier",
-							"Name": "line"
-						}
-					],
-					"Expressions": [
-						{
-							"ExpressionType": "CallExpression",
-							"Base": {
-								"ExpressionType": "MemberExpression",
-								"Object": {
-									"ExpressionType": "Identifier",
-									"Name": "io"
-								},
-								"Field": {
-									"ExpressionType": "Identifier",
-									"Name": "read"
-								}
-							},
-							"Argument": {
-								"ExpressionType": "ArgumentList",
-								"Arguments": []
-							}
-						}
-					]
-				},
-				{
-					"ExpressionType": "LocalAssignmentExpression",
-					"Variables": [
-						{
-							"ExpressionType": "Identifier",
-							"Name": "pos"
-						}
-					],
-					"Expressions": [
-						{
-							"ExpressionType": "SimpleExpression",
-							"ValueType": "number",
-							"Value": "1"
-						}
-					]
-				},
-				{
-					"ExpressionType": "ReturnList",
-					"ReturnValues": [
-						{
-							"ExpressionType": "UnnamedFunction",
-							"Parameters": {
-								"ExpressionType": "ArgumentList",
-								"Arguments": []
-							},
-							"Body": [
-								{
-									"ExpressionType": "WhileStatement",
-									"Condition": {
-										"ExpressionType": "Identifier",
-										"Name": "line"
-									},
-									"Body": [
-										{
-											"ExpressionType": "LocalAssignmentExpression",
-											"Variables": [
-												{
-													"ExpressionType": "Identifier",
-													"Name": "s"
-												},
-												{
-													"ExpressionType": "Identifier",
-													"Name": "e"
-												}
-											],
-											"Expressions": [
-												{
-													"ExpressionType": "CallExpression",
-													"Base": {
-														"ExpressionType": "MemberExpression",
-														"Object": {
-															"ExpressionType": "Identifier",
-															"Name": "string"
-														},
-														"Field": {
-															"ExpressionType": "Identifier",
-															"Name": "find"
-														}
-													},
-													"Argument": {
-														"ExpressionType": "ArgumentList",
-														"Arguments": [
-															{
-																"ExpressionType": "Identifier",
-																"Name": "line"
-															},
-															{
-																"ExpressionType": "SimpleExpression",
-																"ValueType": "string",
-																"Value": "%w+"
-															},
-															{
-																"ExpressionType": "Identifier",
-																"Name": "pos"
-															}
-														]
-													}
-												}
-											]
-										},
-										{
-											"ExpressionType": "IfStatement",
-											"Clauses": {
-												"ExpressionType": "ArgumentList",
-												"Arguments": [
-													{
-														"ExpressionType": "IfClauseStatement",
-														"Condition": {
-															"ExpressionType": "Identifier",
-															"Name": "s"
-														},
-														"Body": [
-															{
-																"ExpressionType": "AssignmentExpression",
-																"Variables": [
-																	{
-																		"ExpressionType": "Identifier",
-																		"Name": "pos"
-																	}
-																],
-																"Expressions": [
-																	{
-																		"ExpressionType": "BinaryExpression",
-																		"Operator": "+",
-																		"LeftOperand": {
-																			"ExpressionType": "Identifier",
-																			"Name": "e"
-																		},
-																		"RightOperand": {
-																			"ExpressionType": "SimpleExpression",
-																			"ValueType": "number",
-																			"Value": "1"
-																		}
-																	}
-																]
-															},
-															{
-																"ExpressionType": "ReturnList",
-																"ReturnValues": [
-																	{
-																		"ExpressionType": "CallExpression",
-																		"Base": {
-																			"ExpressionType": "MemberExpression",
-																			"Object": {
-																				"ExpressionType": "Identifier",
-																				"Name": "string"
-																			},
-																			"Field": {
-																				"ExpressionType": "Identifier",
-																				"Name": "sub"
-																			}
-																		},
-																		"Argument": {
-																			"ExpressionType": "ArgumentList",
-																			"Arguments": [
-																				{
-																					"ExpressionType": "Identifier",
-																					"Name": "line"
-																				},
-																				{
-																					"ExpressionType": "Identifier",
-																					"Name": "s"
-																				},
-																				{
-																					"ExpressionType": "Identifier",
-																					"Name": "e"
-																				}
-																			]
-																		}
-																	}
-																]
-															}
-														]
-													},
-													{
-														"ExpressionType": "ElseClauseStatement",
-														"Body": [
-															{
-																"ExpressionType": "AssignmentExpression",
-																"Variables": [
-																	{
-																		"ExpressionType": "Identifier",
-																		"Name": "line"
-																	}
-																],
-																"Expressions": [
-																	{
-																		"ExpressionType": "CallExpression",
-																		"Base": {
-																			"ExpressionType": "MemberExpression",
-																			"Object": {
-																				"ExpressionType": "Identifier",
-																				"Name": "io"
-																			},
-																			"Field": {
-																				"ExpressionType": "Identifier",
-																				"Name": "read"
-																			}
-																		},
-																		"Argument": {
-																			"ExpressionType": "ArgumentList",
-																			"Arguments": []
-																		}
-																	}
-																]
-															},
-															{
-																"ExpressionType": "AssignmentExpression",
-																"Variables": [
-																	{
-																		"ExpressionType": "Identifier",
-																		"Name": "pos"
-																	}
-																],
-																"Expressions": [
-																	{
-																		"ExpressionType": "SimpleExpression",
-																		"ValueType": "number",
-																		"Value": "1"
-																	}
-																]
-															}
-														]
-													}
-												]
-											}
-										},
-										{
-											"ExpressionType": "ReturnList",
-											"ReturnValues": [
-												{
-													"ExpressionType": "SimpleExpression",
-													"ValueType": "nil",
-													"Value": "nil"
-												}
-											]
-										}
-									]
-								}
-							]
-						}
-					]
-				}
-			]
-		}
-	]
+    "ExpressionType": "Program",
+    "Statements": [
+        {
+            "ExpressionType": "Function",
+            "Name": {
+                "ExpressionType": "Identifier",
+                "Name": "insert"
+            },
+            "Parameters": {
+                "ExpressionType": "ArgumentList",
+                "Arguments": [
+                    {
+                        "ExpressionType": "Identifier",
+                        "Name": "index"
+                    },
+                    {
+                        "ExpressionType": "Identifier",
+                        "Name": "value"
+                    }
+                ]
+            },
+            "Body": [
+                {
+                    "ExpressionType": "IfStatement",
+                    "Clauses": {
+                        "ExpressionType": "ArgumentList",
+                        "Arguments": [
+                            {
+                                "ExpressionType": "IfClauseStatement",
+                                "Condition": {
+                                    "ExpressionType": "UnaryExpression",
+                                    "Operator": "not",
+                                    "Operand": {
+                                        "ExpressionType": "IndexExpression",
+                                        "BaseExpression": {
+                                            "ExpressionType": "Identifier",
+                                            "Name": "statetab"
+                                        },
+                                        "Index": {
+                                            "ExpressionType": "Identifier",
+                                            "Name": "index"
+                                        }
+                                    }
+                                },
+                                "Body": [
+                                    {
+                                        "ExpressionType": "AssignmentExpression",
+                                        "Variables": [
+                                            {
+                                                "ExpressionType": "IndexExpression",
+                                                "BaseExpression": {
+                                                    "ExpressionType": "Identifier",
+                                                    "Name": "statetab"
+                                                },
+                                                "Index": {
+                                                    "ExpressionType": "Identifier",
+                                                    "Name": "index"
+                                                }
+                                            }
+                                        ],
+                                        "Expressions": [
+                                            {
+                                                "ExpressionType": "ConstructorExpression",
+                                                "FieldList": [
+                                                    {
+                                                        "ExpressionType": "KeyExpression",
+                                                        "Key": null,
+                                                        "Value": {
+                                                            "ExpressionType": "Identifier",
+                                                            "Name": "value"
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "ExpressionType": "ElseClauseStatement",
+                                "Body": [
+                                    {
+                                        "ExpressionType": "CallExpression",
+                                        "Base": {
+                                            "ExpressionType": "MemberExpression",
+                                            "Object": {
+                                                "ExpressionType": "Identifier",
+                                                "Name": "table"
+                                            },
+                                            "Field": {
+                                                "ExpressionType": "Identifier",
+                                                "Name": "insert"
+                                            }
+                                        },
+                                        "Argument": {
+                                            "ExpressionType": "ArgumentList",
+                                            "Arguments": [
+                                                {
+                                                    "ExpressionType": "IndexExpression",
+                                                    "BaseExpression": {
+                                                        "ExpressionType": "Identifier",
+                                                        "Name": "statetab"
+                                                    },
+                                                    "Index": {
+                                                        "ExpressionType": "Identifier",
+                                                        "Name": "index"
+                                                    }
+                                                },
+                                                {
+                                                    "ExpressionType": "Identifier",
+                                                    "Name": "value"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    "ExpressionType": "AssignmentExpression",
+                    "Variables": [
+                        {
+                            "ExpressionType": "Identifier",
+                            "Name": "arr"
+                        }
+                    ],
+                    "Expressions": [
+                        {
+                            "ExpressionType": "ConstructorExpression",
+                            "FieldList": [
+                                {
+                                    "ExpressionType": "KeyExpression",
+                                    "Key": null,
+                                    "Value": {
+                                        "ExpressionType": "SimpleExpression",
+                                        "ValueType": "number",
+                                        "Value": "1"
+                                    }
+                                },
+                                {
+                                    "ExpressionType": "KeyExpression",
+                                    "Key": null,
+                                    "Value": {
+                                        "ExpressionType": "SimpleExpression",
+                                        "ValueType": "number",
+                                        "Value": "2"
+                                    }
+                                },
+                                {
+                                    "ExpressionType": "KeyExpression",
+                                    "Key": null,
+                                    "Value": {
+                                        "ExpressionType": "SimpleExpression",
+                                        "ValueType": "number",
+                                        "Value": "3"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "ExpressionType": "ForStatement",
+                    "Initialization": {
+                        "ExpressionType": "SimpleExpression",
+                        "ValueType": "number",
+                        "Value": "0"
+                    },
+                    "Condition": {
+                        "ExpressionType": "SimpleExpression",
+                        "ValueType": "number",
+                        "Value": "2"
+                    },
+                    "Iteration": {
+                        "ExpressionType": "SimpleExpression",
+                        "ValueType": "number",
+                        "Value": "1"
+                    },
+                    "Body": [
+                        {
+                            "ExpressionType": "IfStatement",
+                            "Clauses": {
+                                "ExpressionType": "ArgumentList",
+                                "Arguments": [
+                                    {
+                                        "ExpressionType": "IfClauseStatement",
+                                        "Condition": {
+                                            "ExpressionType": "BinaryExpression",
+                                            "Operator": "==",
+                                            "LeftOperand": {
+                                                "ExpressionType": "IndexExpression",
+                                                "BaseExpression": {
+                                                    "ExpressionType": "Identifier",
+                                                    "Name": "arr"
+                                                },
+                                                "Index": {
+                                                    "ExpressionType": "Identifier",
+                                                    "Name": "i"
+                                                }
+                                            },
+                                            "RightOperand": {
+                                                "ExpressionType": "BinaryExpression",
+                                                "Operator": "+",
+                                                "LeftOperand": {
+                                                    "ExpressionType": "Identifier",
+                                                    "Name": "i"
+                                                },
+                                                "RightOperand": {
+                                                    "ExpressionType": "SimpleExpression",
+                                                    "ValueType": "number",
+                                                    "Value": "1"
+                                                }
+                                            }
+                                        },
+                                        "Body": [
+                                            {
+                                                "ExpressionType": "CallExpression",
+                                                "Base": {
+                                                    "ExpressionType": "Identifier",
+                                                    "Name": "print"
+                                                },
+                                                "Argument": {
+                                                    "ExpressionType": "ArgumentList",
+                                                    "Arguments": [
+                                                        {
+                                                            "ExpressionType": "IndexExpression",
+                                                            "BaseExpression": {
+                                                                "ExpressionType": "Identifier",
+                                                                "Name": "arr"
+                                                            },
+                                                            "Index": {
+                                                                "ExpressionType": "Identifier",
+                                                                "Name": "i"
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "ExpressionType": "Function",
+            "Name": {
+                "ExpressionType": "Identifier",
+                "Name": "allwords"
+            },
+            "Parameters": {
+                "ExpressionType": "ArgumentList",
+                "Arguments": []
+            },
+            "Body": [
+                {
+                    "ExpressionType": "LocalAssignmentExpression",
+                    "Variables": [
+                        {
+                            "ExpressionType": "Identifier",
+                            "Name": "line"
+                        }
+                    ],
+                    "Expressions": [
+                        {
+                            "ExpressionType": "CallExpression",
+                            "Base": {
+                                "ExpressionType": "MemberExpression",
+                                "Object": {
+                                    "ExpressionType": "Identifier",
+                                    "Name": "io"
+                                },
+                                "Field": {
+                                    "ExpressionType": "Identifier",
+                                    "Name": "read"
+                                }
+                            },
+                            "Argument": {
+                                "ExpressionType": "ArgumentList",
+                                "Arguments": []
+                            }
+                        }
+                    ]
+                },
+                {
+                    "ExpressionType": "LocalAssignmentExpression",
+                    "Variables": [
+                        {
+                            "ExpressionType": "Identifier",
+                            "Name": "pos"
+                        }
+                    ],
+                    "Expressions": [
+                        {
+                            "ExpressionType": "SimpleExpression",
+                            "ValueType": "number",
+                            "Value": "1"
+                        }
+                    ]
+                },
+                {
+                    "ExpressionType": "ReturnList",
+                    "ReturnValues": [
+                        {
+                            "ExpressionType": "UnnamedFunction",
+                            "Parameters": {
+                                "ExpressionType": "ArgumentList",
+                                "Arguments": []
+                            },
+                            "Body": [
+                                {
+                                    "ExpressionType": "WhileStatement",
+                                    "Condition": {
+                                        "ExpressionType": "Identifier",
+                                        "Name": "line"
+                                    },
+                                    "Body": [
+                                        {
+                                            "ExpressionType": "LocalAssignmentExpression",
+                                            "Variables": [
+                                                {
+                                                    "ExpressionType": "Identifier",
+                                                    "Name": "s"
+                                                },
+                                                {
+                                                    "ExpressionType": "Identifier",
+                                                    "Name": "e"
+                                                }
+                                            ],
+                                            "Expressions": [
+                                                {
+                                                    "ExpressionType": "CallExpression",
+                                                    "Base": {
+                                                        "ExpressionType": "MemberExpression",
+                                                        "Object": {
+                                                            "ExpressionType": "Identifier",
+                                                            "Name": "string"
+                                                        },
+                                                        "Field": {
+                                                            "ExpressionType": "Identifier",
+                                                            "Name": "find"
+                                                        }
+                                                    },
+                                                    "Argument": {
+                                                        "ExpressionType": "ArgumentList",
+                                                        "Arguments": [
+                                                            {
+                                                                "ExpressionType": "Identifier",
+                                                                "Name": "line"
+                                                            },
+                                                            {
+                                                                "ExpressionType": "SimpleExpression",
+                                                                "ValueType": "string",
+                                                                "Value": "%w+"
+                                                            },
+                                                            {
+                                                                "ExpressionType": "Identifier",
+                                                                "Name": "pos"
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "ExpressionType": "IfStatement",
+                                            "Clauses": {
+                                                "ExpressionType": "ArgumentList",
+                                                "Arguments": [
+                                                    {
+                                                        "ExpressionType": "IfClauseStatement",
+                                                        "Condition": {
+                                                            "ExpressionType": "Identifier",
+                                                            "Name": "s"
+                                                        },
+                                                        "Body": [
+                                                            {
+                                                                "ExpressionType": "AssignmentExpression",
+                                                                "Variables": [
+                                                                    {
+                                                                        "ExpressionType": "Identifier",
+                                                                        "Name": "pos"
+                                                                    }
+                                                                ],
+                                                                "Expressions": [
+                                                                    {
+                                                                        "ExpressionType": "BinaryExpression",
+                                                                        "Operator": "+",
+                                                                        "LeftOperand": {
+                                                                            "ExpressionType": "Identifier",
+                                                                            "Name": "e"
+                                                                        },
+                                                                        "RightOperand": {
+                                                                            "ExpressionType": "SimpleExpression",
+                                                                            "ValueType": "number",
+                                                                            "Value": "1"
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "ExpressionType": "ReturnList",
+                                                                "ReturnValues": [
+                                                                    {
+                                                                        "ExpressionType": "CallExpression",
+                                                                        "Base": {
+                                                                            "ExpressionType": "MemberExpression",
+                                                                            "Object": {
+                                                                                "ExpressionType": "Identifier",
+                                                                                "Name": "string"
+                                                                            },
+                                                                            "Field": {
+                                                                                "ExpressionType": "Identifier",
+                                                                                "Name": "sub"
+                                                                            }
+                                                                        },
+                                                                        "Argument": {
+                                                                            "ExpressionType": "ArgumentList",
+                                                                            "Arguments": [
+                                                                                {
+                                                                                    "ExpressionType": "Identifier",
+                                                                                    "Name": "line"
+                                                                                },
+                                                                                {
+                                                                                    "ExpressionType": "Identifier",
+                                                                                    "Name": "s"
+                                                                                },
+                                                                                {
+                                                                                    "ExpressionType": "Identifier",
+                                                                                    "Name": "e"
+                                                                                }
+                                                                            ]
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "ExpressionType": "ElseClauseStatement",
+                                                        "Body": [
+                                                            {
+                                                                "ExpressionType": "AssignmentExpression",
+                                                                "Variables": [
+                                                                    {
+                                                                        "ExpressionType": "Identifier",
+                                                                        "Name": "line"
+                                                                    }
+                                                                ],
+                                                                "Expressions": [
+                                                                    {
+                                                                        "ExpressionType": "CallExpression",
+                                                                        "Base": {
+                                                                            "ExpressionType": "MemberExpression",
+                                                                            "Object": {
+                                                                                "ExpressionType": "Identifier",
+                                                                                "Name": "io"
+                                                                            },
+                                                                            "Field": {
+                                                                                "ExpressionType": "Identifier",
+                                                                                "Name": "read"
+                                                                            }
+                                                                        },
+                                                                        "Argument": {
+                                                                            "ExpressionType": "ArgumentList",
+                                                                            "Arguments": []
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "ExpressionType": "AssignmentExpression",
+                                                                "Variables": [
+                                                                    {
+                                                                        "ExpressionType": "Identifier",
+                                                                        "Name": "pos"
+                                                                    }
+                                                                ],
+                                                                "Expressions": [
+                                                                    {
+                                                                        "ExpressionType": "SimpleExpression",
+                                                                        "ValueType": "number",
+                                                                        "Value": "1"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "ExpressionType": "ReturnList",
+                                            "ReturnValues": [
+                                                {
+                                                    "ExpressionType": "SimpleExpression",
+                                                    "ValueType": "nil",
+                                                    "Value": "nil"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }

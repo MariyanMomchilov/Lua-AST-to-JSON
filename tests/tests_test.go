@@ -7,7 +7,7 @@ import (
 	"testing"
 
 	"../ast2json"
-	"../ast2jsonIPL"
+	ast2jsonipl "../ast2jsonIPL"
 	"../lexer"
 	"../parser"
 )
@@ -55,6 +55,21 @@ func TestParserIPL(t *testing.T) {
 	node := parser.Run()
 
 	jsonfile, _ := os.Create("testIPL.json")
+	defer file.Close()
+	visitor := ast2jsonipl.NewJSONVisitor(jsonfile)
+	node.AcceptVisitor(visitor)
+}
+
+func TestParserIPL2(t *testing.T) {
+	file, _ := os.Open("parserTestIPL2.txt")
+	src, _ := ioutil.ReadAll(file)
+	var lex lexer.Lexer
+	lex = lex.New(string(src))
+	tokens, _ := lex.Run()
+	parser := parser.NewParser(tokens)
+	node := parser.Run()
+
+	jsonfile, _ := os.Create("testIPL2.json")
 	defer file.Close()
 	visitor := ast2jsonipl.NewJSONVisitor(jsonfile)
 	node.AcceptVisitor(visitor)

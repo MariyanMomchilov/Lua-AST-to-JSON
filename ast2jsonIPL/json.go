@@ -3,6 +3,7 @@ package ast2jsonipl
 import (
 	"fmt"
 	"io"
+	"strconv"
 
 	"../lexer"
 	"../parser"
@@ -11,7 +12,7 @@ import (
 var tokenOp map[lexer.TokenType]string = map[lexer.TokenType]string{
 	lexer.STRING:   "String",
 	lexer.NUMBER:   "Number",
-	lexer.NIL:      "null",
+	lexer.NIL:      "Null",
 	lexer.ASSIGN:   "Equal",
 	lexer.PLUS:     "Plus",
 	lexer.MINUS:    "Minus",
@@ -41,14 +42,28 @@ func (v *VisitorJSON) checkAndAccept(node parser.Node) {
 	if node != nil {
 		node.AcceptVisitor(v)
 	} else {
-		v.writer.Write([]byte("null"))
+		v.writer.Write([]byte("Null"))
 	}
 }
 
 func (v *VisitorJSON) VisitSimpleExpr(expr *parser.SimpleExpr) {
 	io.WriteString(v.writer, "{")
-	io.WriteString(v.writer, "\"ExpressionType\": \"LiteralString\",")
-	io.WriteString(v.writer, fmt.Sprintf("\"Value\": \"%s\"", expr.Val))
+	if expr.Val == "true" || expr.Val == "false" {
+		io.WriteString(v.writer, "\"ExpressionType\": \"LiteralBoolean\",")
+		io.WriteString(v.writer, fmt.Sprintf("\"Value\": %s", expr.Val))
+		io.WriteString(v.writer, "}")
+		return
+	}
+	toNum, err := strconv.Atoi(expr.Val)
+	if err != nil {
+		io.WriteString(v.writer, "\"ExpressionType\": \"LiteralString\",")
+		io.WriteString(v.writer, fmt.Sprintf("\"Value\": \"%s\"", expr.Val))
+		io.WriteString(v.writer, "}")
+		return
+	}
+
+	io.WriteString(v.writer, "\"ExpressionType\": \"LiteralNumber\",")
+	io.WriteString(v.writer, fmt.Sprintf("\"Value\": %d", toNum))
 	io.WriteString(v.writer, "}")
 }
 
@@ -80,19 +95,15 @@ func (v *VisitorJSON) VisitIdentifier(id *parser.Identifier) {
 }
 
 func (v *VisitorJSON) VisitConstructorExpr(expr *parser.ConstructorExpr) {
-	// ?
 }
 
 func (v *VisitorJSON) VisitIndexExpr(expr *parser.IndexExpr) {
-	// ?
 }
 
 func (v *VisitorJSON) VisitMemberExpr(expr *parser.MemberExpr) {
-	// ?
 }
 
 func (v *VisitorJSON) VisitKeyExpr(expr *parser.KeyExpr) {
-	// ?
 }
 
 func (v *VisitorJSON) VisitProgram(program parser.Program) {
@@ -149,19 +160,24 @@ func (v *VisitorJSON) VisitCallExpr(expr *parser.CallExpr) {
 }
 
 func (v *VisitorJSON) VisitFunction(f *parser.Function) {
-	// ?
 }
 
 func (v *VisitorJSON) VisitNamedFunction(f *parser.NamedFunction) {
 	io.WriteString(v.writer, "{")
 	io.WriteString(v.writer, "\"ExpressionType\": \"FunctionDeclaration\",")
 	io.WriteString(v.writer, "\"Name\": ")
-	v.checkAndAccept(f.FunctionName)
+	val, ok := f.FunctionName.(*parser.Identifier)
+	if ok {
+		io.WriteString(v.writer, "\""+val.Name+"\"")
+	} else {
+		v.checkAndAccept(f.FunctionName)
+	}
 	io.WriteString(v.writer, ",")
 	io.WriteString(v.writer, "\"ArgumentsIdentifiers\": ")
-	v.checkAndAccept(f.Parameters)
+	v.writeParamList(f.Parameters)
 	io.WriteString(v.writer, ",")
-	v.body2JSON(f.Body)
+	io.WriteString(v.writer, "\"Body\": ")
+	v.checkAndAccept(parser.Program(f.Body))
 	io.WriteString(v.writer, "}")
 }
 
@@ -169,12 +185,18 @@ func (v *VisitorJSON) VisitLocalFunction(f *parser.LocalFunction) {
 	io.WriteString(v.writer, "{")
 	io.WriteString(v.writer, "\"ExpressionType\": \"FunctionDeclaration\",")
 	io.WriteString(v.writer, "\"Name\": ")
-	v.checkAndAccept(f.FunctionName)
+	val, ok := f.FunctionName.(*parser.Identifier)
+	if ok {
+		io.WriteString(v.writer, "\""+val.Name+"\"")
+	} else {
+		v.checkAndAccept(f.FunctionName)
+	}
 	io.WriteString(v.writer, ",")
 	io.WriteString(v.writer, "\"ArgumentsIdentifiers\": ")
-	v.checkAndAccept(f.Parameters)
+	v.writeParamList(f.Parameters)
 	io.WriteString(v.writer, ",")
-	v.body2JSON(f.Body)
+	io.WriteString(v.writer, "\"Body\": ")
+	v.checkAndAccept(parser.Program(f.Body))
 	io.WriteString(v.writer, "}")
 }
 
@@ -188,13 +210,13 @@ func (v *VisitorJSON) VisitAssignmentExpr(expr *parser.AssignmentExpr) {
 			io.WriteString(v.writer, fmt.Sprintf("\"%s\"", simpExpr.Name))
 		}
 	} else {
-		io.WriteString(v.writer, "\"null\"")
+		io.WriteString(v.writer, "\"Null\"")
 	}
 	io.WriteString(v.writer, ", \"Value\": ")
 	if len(expr.Exprs) > 0 {
 		v.checkAndAccept(expr.Exprs[0])
 	} else {
-		io.WriteString(v.writer, "\"null\"")
+		io.WriteString(v.writer, "\"Null\"")
 	}
 	io.WriteString(v.writer, "}")
 }
@@ -209,19 +231,18 @@ func (v *VisitorJSON) VisitLocalAssignmentExpr(expr *parser.LocalAssignmentExpr)
 			io.WriteString(v.writer, fmt.Sprintf("\"%s\"", simpExpr.Name))
 		}
 	} else {
-		io.WriteString(v.writer, "\"null\"")
+		io.WriteString(v.writer, "\"Null\"")
 	}
 	io.WriteString(v.writer, ", \"Value\": ")
 	if len(expr.Exprs) > 0 {
 		v.checkAndAccept(expr.Exprs[0])
 	} else {
-		io.WriteString(v.writer, "\"null\"")
+		io.WriteString(v.writer, "\"Null\"")
 	}
 	io.WriteString(v.writer, "}")
 }
 
 func (v *VisitorJSON) VisitDoStmnt(st *parser.DoStmnt) {
-	// ?
 }
 
 func (v *VisitorJSON) VisitWhileStmnt(st *parser.WhileStmnt) {
@@ -236,19 +257,45 @@ func (v *VisitorJSON) VisitWhileStmnt(st *parser.WhileStmnt) {
 }
 
 func (v *VisitorJSON) VisitIfStmnt(st *parser.IfStmnt) {
-	// ?
+	argList := st.Clauses.(parser.ArgList)
+	if len(argList) == 0 {
+		//io.WriteString(v.writer, "\"Null\"")
+		return
+	}
+	io.WriteString(v.writer, "{")
+	io.WriteString(v.writer, "\"ExpressionType\": \"IfStatement\",")
+	switch t := argList[0].(type) {
+	case *parser.IfClause:
+		io.WriteString(v.writer, "\"Condition\": ")
+		v.checkAndAccept(t.Condition)
+		io.WriteString(v.writer, ", \"IfStatement\": ")
+		v.checkAndAccept(parser.Program(t.Block))
+		io.WriteString(v.writer, ", \"ElseStatement\": ")
+	case *parser.ElseIfClause:
+		io.WriteString(v.writer, "\"Condition\": ")
+		v.checkAndAccept(t.Condition)
+		io.WriteString(v.writer, ", \"IfStatement\": ")
+		v.checkAndAccept(parser.Program(t.Block))
+		io.WriteString(v.writer, ", \"ElseStatement\": ")
+	case *parser.ElseClause:
+		io.WriteString(v.writer, "\"Condition\": \"Null\"")
+		io.WriteString(v.writer, ", \"IfStatement\": ")
+		v.checkAndAccept(parser.Program(t.Block))
+		io.WriteString(v.writer, ", \"ElseStatement\": ")
+	}
+	v.VisitIfStmnt(&parser.IfStmnt{argList[1:]})
+
+	io.WriteString(v.writer, "}")
+
 }
 
 func (v *VisitorJSON) VisitIfClause(st *parser.IfClause) {
-	// ?
 }
 
 func (v *VisitorJSON) VisitElseIfClause(st *parser.ElseIfClause) {
-	// ?
 }
 
 func (v *VisitorJSON) VisitElseClause(st *parser.ElseClause) {
-	// ?
 }
 
 func (v *VisitorJSON) VisitForStmnt(st *parser.ForStmnt) {
@@ -274,6 +321,18 @@ func (v *VisitorJSON) body2JSON(block []parser.Node) {
 		if i != len(block)-1 {
 			io.WriteString(v.writer, ", ")
 		}
+	}
+	io.WriteString(v.writer, "]")
+}
+
+func (v *VisitorJSON) writeParamList(list parser.ArgList) {
+	io.WriteString(v.writer, "[")
+	for i, node := range list {
+		if i == len(list)-1 {
+			io.WriteString(v.writer, "\""+node.(*parser.Identifier).Name+"\"")
+			break
+		}
+		io.WriteString(v.writer, "\""+node.(*parser.Identifier).Name+"\",")
 	}
 	io.WriteString(v.writer, "]")
 }
